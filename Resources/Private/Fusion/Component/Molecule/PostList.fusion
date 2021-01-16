@@ -1,0 +1,31 @@
+prototype(Ujamii.ExternalBlog:Component.Molecule.PostList) < prototype(Neos.Fusion:Component) {
+
+    posts = ${[]}
+    attributes = Neos.Fusion:DataStructure
+    postAttributes = Neos.Fusion:DataStructure
+
+    @context.postAttributes = ${this.postAttributes}
+    @context.posts = ${this.posts}
+
+    renderedPosts = Neos.Fusion:Loop {
+        items = ${posts}
+        itemRenderer = Ujamii.ExternalBlog:Component.Atom.Post {
+            post = ${item}
+            attributes = ${postAttributes}
+        }
+    }
+
+    renderer = afx`
+        <div {...props.attributes}>
+            Post List
+
+            <div @if.hasPosts={Array.length(posts) > 0}>
+                {props.renderedPosts}
+            </div>
+
+            <div @if.noPosts={Array.length(posts) == 0}>
+                Leider keine Posts aus der URL {props.feedUrl}.
+            </div>
+        </div>
+    `
+}

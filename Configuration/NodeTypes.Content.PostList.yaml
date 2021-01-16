@@ -1,0 +1,39 @@
+'Ujamii.ExternalBlog:Content.PostList':
+  superTypes:
+    'Neos.Neos:Content': true
+  ui:
+    label: 'External Blog Post List'
+    icon: 'fas fa-rss'
+    group: 'other'
+    inspector:
+      groups:
+        externalBlog:
+          label: 'Blog'
+          icon: 'fas fa-blog'
+  properties:
+    feedUrl:
+      type: 'string'
+      ui:
+        label: 'RSS URL'
+        reloadIfChanged: true
+        inspector:
+          group: 'externalBlog'
+      validation:
+        'Neos.Neos/Validation/NotEmptyValidator':
+        'Neos.Neos/Validation/StringValidator':
+    numberOfItemsToShow:
+      type: integer
+      defaultValue: 5
+      ui:
+        label: 'Number of items to show'
+        reloadIfChanged: true
+        inspector:
+          group: 'externalBlog'
+    itemOffset:
+      type: integer
+      defaultValue: 0
+      ui:
+        label: 'Offset'
+        reloadIfChanged: true
+        inspector:
+          group: 'externalBlog'

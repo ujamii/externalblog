@@ -1,0 +1,15 @@
+prototype(Ujamii.ExternalBlog:Component.Atom.Post) < prototype(Neos.Fusion:Component) {
+
+    post = null
+    attributes = Neos.Fusion:DataStructure
+
+    renderer = afx`
+        <div {...props.attributes}>
+            <h4>{props.post.title}</h4>
+            <p>{props.post.description}</p>
+            <p>{Date.format(props.post.pubDate, 'd.m.Y')}</p>
+            <p>{props.post.link}</p>
+            <Neos.Neos:ImageTag attributes.src={props.post.firstMediaUrl} attributes.width="250"/>
+        </div>
+    `
+}

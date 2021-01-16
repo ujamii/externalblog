@@ -1,0 +1,20 @@
+{
+    "description": "",
+    "type": "neos-package",
+    "name": "ujamii/externalblog",
+    "require": {
+        "ext-simplexml": "*",
+        "ext-libxml": "*",
+        "neos/flow": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ujamii\\ExternalBlog\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "Ujamii.ExternalBlog"
+        }
+    }
+}

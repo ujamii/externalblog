@@ -1,0 +1,3 @@
+Ujamii_ExternalBlog_BlogDataService:
+  frontend: 'Neos\Cache\Frontend\VariableFrontend'
+  backend: 'Neos\Cache\Backend\FileBackend'

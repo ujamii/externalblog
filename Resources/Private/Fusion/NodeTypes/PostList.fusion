@@ -1,0 +1,35 @@
+prototype(Ujamii.ExternalBlog:Content.PostList) < prototype(Neos.Neos:ContentComponent) {
+
+    feedUrl = ${q(node).property('feedUrl')}
+    numberOfItemsToShow = ${q(node).property('numberOfItemsToShow')}
+    itemOffset = ${q(node).property('itemOffset')}
+
+    posts = ${Ujamii.ExternalBlog.getBlogPosts(this.feedUrl, this.numberOfItemsToShow, this.itemOffset)}
+
+    renderer = Neos.Fusion:Case {
+        noURL {
+            condition = ${String.isBlank(props.feedUrl)}
+            renderer = afx`
+                <div>
+                    Keine URL gepflegt...
+                </div>
+            `
+        }
+        hasPosts {
+            condition = ${Array.length(props.posts) > 0}
+            renderer = Ujamii.ExternalBlog:Component.Molecule.PostList {
+                @apply.props = ${props}
+                attributes.class = 'blog-posts'
+                postAttributes.class = 'post'
+            }
+        }
+        noPosts {
+            condition = ${Array.length(props.posts) == 0}
+            renderer = afx`
+                <div>
+                    Leider keine Posts aus der URL {props.feedUrl}.
+                </div>
+            `
+        }
+    }
+}
