@@ -1,7 +1,14 @@
 {
-    "description": "",
-    "type": "neos-package",
     "name": "ujamii/externalblog",
+    "description": "NEOS CMS package to display content from an external blog.",
+    "type": "neos-package",
+    "license": "GPL-3.0-only",
+    "authors": [
+        {
+            "name": "Michael Grundkötter",
+            "email": "mg@ujamii.com"
+        }
+    ],
     "require": {
         "ext-simplexml": "*",
         "ext-libxml": "*",
