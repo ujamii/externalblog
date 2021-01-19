@@ -3,6 +3,11 @@ prototype(Ujamii.ExternalBlog:Component.Atom.Post) < prototype(Neos.Fusion:Compo
     post = null
     attributes = Neos.Fusion:DataStructure
 
+    # note about images: props.post.firstMediaUrl will contain the absolute URL to an external image.
+    # if you prefer to store this locally, use this eel helper:
+    # imageResource = ${Ujamii.ExternalBlog.importRemoteImage(this.post.firstMediaUrl)}
+    # you can also pass the target collection name as second argument. "imported" is default
+
     renderer = afx`
         <div {...props.attributes}>
             <h4>{props.post.title}</h4>
