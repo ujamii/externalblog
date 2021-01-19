@@ -89,18 +89,26 @@ class BlogPostHelper implements ProtectedContextAwareInterface
     public function importRemoteImage(string $remoteImageUrl, string $collectionName = self::DEFAULT_COLLECTION_NAME): ?Image
     {
         try {
+            $existingImage = $this->imageRepository->findOneByTitle($remoteImageUrl);
+            if (null !== $existingImage) {
+                return $existingImage;
+            }
             $resource = $this->resourceManager->importResource($remoteImageUrl);
             if ($resource) {
-                $image = new Image($resource);
-                $this->imageRepository->add($image);
+                $image = $this->imageRepository->findOneByResourceSha1($resource->getSha1());
+                if (null === $image) {
+                    $image = new Image($resource);
+                    $image->setTitle($remoteImageUrl);
+                    $this->imageRepository->add($image);
 
-                $imageCollection = $this->assetCollectionRepository->findOneByTitle($collectionName);
-                if ($imageCollection !== null) {
-                    $imageCollection->addAsset($image);
-                    $this->assetCollectionRepository->update($imageCollection);
+                    $imageCollection = $this->assetCollectionRepository->findOneByTitle($collectionName);
+                    if ($imageCollection !== null) {
+                        $imageCollection->addAsset($image);
+                        $this->assetCollectionRepository->update($imageCollection);
+                    }
+
+                    $this->persistenceManager->persistAll();
                 }
-
-                $this->persistenceManager->persistAll();
 
                 return $image;
             }
@@ -111,7 +119,6 @@ class BlogPostHelper implements ProtectedContextAwareInterface
 
         return null;
     }
-
 
     /**
      * @param string $methodName
