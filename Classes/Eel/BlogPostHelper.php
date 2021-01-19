@@ -8,6 +8,7 @@ use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Media\Domain\Model\Image;
+use Neos\Media\Domain\Repository\AssetCollectionRepository;
 use Neos\Media\Domain\Repository\ImageRepository;
 use Psr\Log\LoggerInterface;
 use Ujamii\ExternalBlog\Service\BlogDataService;
@@ -51,6 +52,12 @@ class BlogPostHelper implements ProtectedContextAwareInterface
     protected $persistenceManager;
 
     /**
+     * @Flow\Inject
+     * @var AssetCollectionRepository
+     */
+    protected $assetCollectionRepository;
+
+    /**
      * @param string|null $url
      * @param int|null $maxItems
      * @param int|null $offset
@@ -82,10 +89,17 @@ class BlogPostHelper implements ProtectedContextAwareInterface
     public function importRemoteImage(string $remoteImageUrl, string $collectionName = self::DEFAULT_COLLECTION_NAME): ?Image
     {
         try {
-            $resource = $this->resourceManager->importResource($remoteImageUrl, $collectionName);
+            $resource = $this->resourceManager->importResource($remoteImageUrl);
             if ($resource) {
                 $image = new Image($resource);
                 $this->imageRepository->add($image);
+
+                $imageCollection = $this->assetCollectionRepository->findOneByTitle($collectionName);
+                if ($imageCollection !== null) {
+                    $imageCollection->addAsset($image);
+                    $this->assetCollectionRepository->update($imageCollection);
+                }
+
                 $this->persistenceManager->persistAll();
 
                 return $image;
@@ -97,6 +111,7 @@ class BlogPostHelper implements ProtectedContextAwareInterface
 
         return null;
     }
+
 
     /**
      * @param string $methodName
