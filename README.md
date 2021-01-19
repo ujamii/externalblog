@@ -1,5 +1,7 @@
 # External Blog extension for NEOS CMS
 
+[![Packagist](https://img.shields.io/packagist/v/ujamii/externalblog.svg?colorB=green&style=flat)](https://packagist.org/packages/ujamii/externalblog)
+
 This package adds a new content type which shows a list of blog posts from an external blog. 
 
 ## Installation
