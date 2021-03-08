@@ -1,3 +1,6 @@
+## 0.3.1 (March 08, 2021)
+  - [BUGFIX] usecache parameter was filled with maxItems
+
 ## 0.3.0 (January 19, 2021)
   - [BUGFIX] prevent multiple import of the same image
   - [BUGFIX] collections work kind of different than expected...
