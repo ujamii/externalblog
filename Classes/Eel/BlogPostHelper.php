@@ -61,16 +61,16 @@ class BlogPostHelper implements ProtectedContextAwareInterface
      * @param string|null $url
      * @param int|null $maxItems
      * @param int|null $offset
+     * @param bool $useCache
      *
      * @return array
-     * @throws NoSuchCacheException
      */
-    public function getBlogPosts(?string $url, ?int $maxItems = 10, ?int $offset = 0): array
+    public function getBlogPosts(?string $url, ?int $maxItems = 10, ?int $offset = 0, bool $useCache = true): array
     {
         $posts = [];
         if ( ! empty($url)) {
             try {
-                $posts = $this->blogDataService->getPostsFromUrl($url, $maxItems);
+                $posts = $this->blogDataService->getPostsFromUrl($url, $useCache);
                 $posts = array_slice($posts, $offset, $maxItems);
             } catch (NoSuchCacheException $e) {
                 $this->logger->error($e->getMessage());
