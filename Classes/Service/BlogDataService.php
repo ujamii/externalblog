@@ -96,7 +96,7 @@ class BlogDataService
             }
         }
 
-        $return = [];
+        $return = '';
         try {
             $return = $this->browser->request($url)->getBody()->getContents();
             if ( ! empty($return)) {
