@@ -1,3 +1,6 @@
+## 0.3.2 (August 05, 2021)
+  - [BUGFIX] fixed fallback return value type
+
 ## 0.3.1 (March 08, 2021)
   - [BUGFIX] usecache parameter was filled with maxItems
 
