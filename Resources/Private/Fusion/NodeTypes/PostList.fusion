@@ -3,8 +3,10 @@ prototype(Ujamii.ExternalBlog:Content.PostList) < prototype(Neos.Neos:ContentCom
     feedUrl = ${q(node).property('feedUrl')}
     numberOfItemsToShow = ${q(node).property('numberOfItemsToShow')}
     itemOffset = ${q(node).property('itemOffset')}
+    username = ${q(node).property('username')}
+    password = ${q(node).property('password')}
 
-    posts = ${Ujamii.ExternalBlog.getBlogPosts(this.feedUrl, this.numberOfItemsToShow, this.itemOffset)}
+    posts = ${Ujamii.ExternalBlog.getBlogPosts(this.feedUrl, this.numberOfItemsToShow, this.itemOffset, true, this.username, this.password)}
 
     renderer = Neos.Fusion:Case {
         noURL {
