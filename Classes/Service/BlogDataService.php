@@ -2,6 +2,7 @@
 
 namespace Ujamii\ExternalBlog\Service;
 
+use GuzzleHttp\Psr7\Uri;
 use Neos\Cache\Frontend\VariableFrontend;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Cache\CacheManager;
@@ -48,19 +49,20 @@ class BlogDataService
     /**
      * @param string $url
      * @param bool $useCache
+     * @param string $username
+     * @param string $password
      *
      * @return array
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    public function getPostsFromUrl(string $url, $useCache = true): array
+    public function getPostsFromUrl(string $url, bool $useCache = true, string $username = '', string $password = ''): array
     {
-        $xmlString = $this->getCachedOrFreshXmlData($url, $useCache, 'postList');
+        $xmlString = $this->getCachedOrFreshXmlData($url, $useCache, 'postList', $username, $password);
         try {
             $xmlObject = new \SimpleXMLElement($xmlString, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_NOCDATA);
         } catch (\Exception $e) {
             return [];
         }
-
 
         if ($xmlObject->channel) {
             $posts = [];
@@ -85,11 +87,13 @@ class BlogDataService
      * @param string $url
      * @param bool $useCache
      * @param string $cacheName
+     * @param string $username
+     * @param string $password
      *
      * @return string
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    protected function getCachedOrFreshXmlData(string $url, bool $useCache = true, string $cacheName = ''): string
+    protected function getCachedOrFreshXmlData(string $url, bool $useCache = true, string $cacheName = '', string $username = '', string $password = ''): string
     {
         /** @var VariableFrontend $xmlCache */
         $xmlCache = $this->cacheManager->getCache(self::CACHE_IDENTIFIER);
@@ -103,6 +107,10 @@ class BlogDataService
 
         $return = '';
         try {
+            if (!empty($username)) {
+                $url = new Uri($url);
+                $url = $url->withUserInfo($username, $password);
+            }
             $return = $this->browser->request($url)->getBody()->getContents();
             if ( ! empty($return)) {
                 $xmlCache->set($cacheName, $return);

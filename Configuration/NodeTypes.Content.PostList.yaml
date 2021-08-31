@@ -21,6 +21,20 @@
       validation:
         'Neos.Neos/Validation/NotEmptyValidator':
         'Neos.Neos/Validation/StringValidator':
+    username:
+      type: 'string'
+      ui:
+        label: 'RSS Basic Auth Username'
+        reloadIfChanged: true
+        inspector:
+          group: 'externalBlog'
+    password:
+      type: 'string'
+      ui:
+        label: 'RSS Basic Auth Password'
+        reloadIfChanged: true
+        inspector:
+          group: 'externalBlog'
     numberOfItemsToShow:
       type: integer
       defaultValue: 5
