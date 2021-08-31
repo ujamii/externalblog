@@ -1,3 +1,7 @@
+## 0.4.0 (August 31, 2021)
+  - [FEATURE] added optional basic auth to feed url
+  - [BUGFIX] as the string response may be empty or not xml, we have to add a try/catch here, fixes #1
+
 ## 0.3.2 (August 05, 2021)
   - [BUGFIX] fixed fallback return value type
 
