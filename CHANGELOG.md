@@ -1,3 +1,6 @@
+## 0.4.2 (August 31, 2021)
+  - [TASK] added username and password properties to the example fusion
+
 ## 0.4.1 (August 31, 2021)
   - [BUGFIX] allow null to prevent error with existing nodes and node:repair is not run
 
