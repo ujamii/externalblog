@@ -67,7 +67,7 @@ class BlogPostHelper implements ProtectedContextAwareInterface
      *
      * @return array
      */
-    public function getBlogPosts(?string $url, ?int $maxItems = 10, ?int $offset = 0, bool $useCache = true, string $username = '', string $password = ''): array
+    public function getBlogPosts(?string $url, ?int $maxItems = 10, ?int $offset = 0, bool $useCache = true, ?string $username = '', ?string $password = ''): array
     {
         $posts = [];
         if ( ! empty($url)) {

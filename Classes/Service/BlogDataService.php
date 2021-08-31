@@ -55,7 +55,7 @@ class BlogDataService
      * @return array
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    public function getPostsFromUrl(string $url, bool $useCache = true, string $username = '', string $password = ''): array
+    public function getPostsFromUrl(string $url, bool $useCache = true, ?string $username = '', ?string $password = ''): array
     {
         $xmlString = $this->getCachedOrFreshXmlData($url, $useCache, 'postList', $username, $password);
         try {
@@ -93,7 +93,7 @@ class BlogDataService
      * @return string
      * @throws \Neos\Cache\Exception\NoSuchCacheException
      */
-    protected function getCachedOrFreshXmlData(string $url, bool $useCache = true, string $cacheName = '', string $username = '', string $password = ''): string
+    protected function getCachedOrFreshXmlData(string $url, bool $useCache = true, string $cacheName = '', ?string $username = '', ?string $password = ''): string
     {
         /** @var VariableFrontend $xmlCache */
         $xmlCache = $this->cacheManager->getCache(self::CACHE_IDENTIFIER);
