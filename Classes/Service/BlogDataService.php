@@ -55,7 +55,12 @@ class BlogDataService
     public function getPostsFromUrl(string $url, $useCache = true): array
     {
         $xmlString = $this->getCachedOrFreshXmlData($url, $useCache, 'postList');
-        $xmlObject = new \SimpleXMLElement($xmlString, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_NOCDATA);
+        try {
+            $xmlObject = new \SimpleXMLElement($xmlString, LIBXML_NOWARNING | LIBXML_NOERROR | LIBXML_NOCDATA);
+        } catch (\Exception $e) {
+            return [];
+        }
+
 
         if ($xmlObject->channel) {
             $posts = [];
