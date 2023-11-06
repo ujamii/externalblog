@@ -69,7 +69,7 @@ class BlogPost
         $post->setAuthor((string)$xmlElement->author);
         $post->setLink((string)$xmlElement->link);
         if (isset($xmlElement->{'dc:date'})) {
-            $post->setPubDate(\DateTime::createFromFormat(DATE_RSS, $xmlElement->{'dc:date'}));
+            $post->setPubDate(\DateTime::createFromFormat(DATE_ATOM, $xmlElement->{'dc:date'}));
         } elseif (isset($xmlElement->pubDate)) {
             $post->setPubDate(\DateTime::createFromFormat(DATE_RSS, $xmlElement->pubDate));
         }
